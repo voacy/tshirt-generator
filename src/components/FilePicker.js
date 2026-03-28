@@ -15,8 +15,8 @@ const FilePicker = ({ file, setFile, readFile }) => {
 			</div>
 
 			<div className="mt-4 flex flex-wrap gap-3">
-				<CustomButton type="outline" title="Logo" handleClick={() => readFile("logo")} customStyles="text-xs" />
-				<CustomButton type="filled" title="Full" handleClick={() => readFile("full")} customStyles="text-xs" />
+				<CustomButton type="outline" title="Logo" handleClick={() => readFile("logo")} customStyles={`text-xs ${!file ? 'opacity-50 cursor-not-allowed' : ''}`} isDisabled={!file} />
+				<CustomButton type="filled" title="Full" handleClick={() => readFile("full")} customStyles={`text-xs ${!file ? 'opacity-50 cursor-not-allowed' : ''}`} isDisabled={!file} />
 			</div>
 		</div>
 	);
