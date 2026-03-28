@@ -17,7 +17,12 @@ html {
 
 .app {
 	@apply relative w-full h-screen overflow-hidden;
+	background-color: #ffffff;
+	background-image: radial-gradient(rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+	background-size: 30px 30px;
 }
+
+
 
 .home {
 	@apply w-fit xl:h-full flex xl:justify-between justify-start items-start flex-col xl:py-8 xl:px-36 sm:p-8 p-6 max-xl:gap-7 absolute z-10;

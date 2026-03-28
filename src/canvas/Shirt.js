@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { easing } from "maath";
 import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
+import * as THREE from "three";
 
 import state from "../store";
 
@@ -13,7 +14,15 @@ const Shirt = () => {
 	const logoTexture = useTexture(snap.logoDecal);
 	const fullTexture = useTexture(snap.fullDecal);
 
-	useFrame((state, delta) => easing.dampC(materials.lambert1.color, snap.color, 0.25, delta));
+	useEffect(() => {
+		logoTexture.alphaTest = 0.5;
+		logoTexture.transparent = true;
+		logoTexture.needsUpdate = true;
+	}, [logoTexture]);
+
+	useFrame((state, delta) =>
+		easing.dampC(materials.lambert1.color, snap.color, 0.25, delta),
+	);
 
 	const stateString = JSON.stringify(snap);
 
@@ -26,17 +35,25 @@ const Shirt = () => {
 				material-roughness={1}
 				dispose={null}
 			>
-				{snap.isFullTexture && <Decal position={[0, 0, 0]} rotation={[0, 0, 0]} scale={1} map={fullTexture} />}
+				{snap.isFullTexture && (
+					<Decal
+						position={[0, 0, 0]}
+						rotation={[0, 0, 0]}
+						scale={1}
+						map={fullTexture}
+					/>
+				)}
 
 				{snap.isLogoTexture && (
 					<Decal
 						position={[0, 0.04, 0.15]}
 						rotation={[0, 0, 0]}
-						scale={0.15}
+						scale={[0.15, 0.12, 0.15]}
 						map={logoTexture}
-						// map-anisotropy={14}
 						depthTest={false}
 						depthWrite={true}
+						polygonOffset
+						polygonOffsetFactor={-1}
 					/>
 				)}
 			</mesh>
